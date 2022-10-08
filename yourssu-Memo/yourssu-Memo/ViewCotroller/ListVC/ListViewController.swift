@@ -61,7 +61,6 @@ extension ListViewController {
         self.title = "yourSSU 메모"
         
         self.navigationController?.navigationBar.prefersLargeTitles = true
-
         
         let appearance = UINavigationBarAppearance()
         
@@ -126,32 +125,23 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         let newViewController = WriteViewController()
-        
         let memo = tasks[indexPath.row]
-        
         newViewController.memoTask = memo
-        
         self.navigationController?.pushViewController(newViewController, animated: true)
-        
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
         let delete = UIContextualAction(style: .destructive, title: "삭제") { action, view, success in
-            
             let memo = self.tasks[indexPath.row]
             
             try! self.realm.write {
                 self.realm.delete(memo)
             }
-            
             self.listView.listTableview.deleteRows(at: [indexPath], with: .automatic)
-            
             success(true)
         }
-        
        return UISwipeActionsConfiguration(actions: [delete])
     }
     
@@ -163,11 +153,8 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
         return 15
     }
     
-    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 15))
-        
         return headerView
     }
-    
 }
